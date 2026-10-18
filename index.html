@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dark Login</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;display:grid;place-items:center;
+  padding:20px;background:#090b09;color:#f5f7f4;
+  font-family:Tahoma,Arial,sans-serif
+}
+.card{
+  width:100%;max-width:380px;padding:30px;
+  background:#141814;border:1px solid #293329;
+  border-radius:20px;box-shadow:0 15px 50px #0008
+}
+.logo{
+  width:52px;height:52px;display:grid;place-items:center;
+  border-radius:15px;background:#263b22;color:#b5d6a5;
+  font-size:25px;font-weight:bold;margin-bottom:22px
+}
+h1{font-size:25px;margin:0 0 10px}
+p{color:#929a90;font-size:13px;line-height:1.8}
+label{display:block;margin:18px 0 8px;font-size:13px}
+input{
+  width:100%;padding:13px;border:1px solid #343d33;
+  border-radius:10px;background:#0d100d;color:white;
+  font-size:15px;outline:none
+}
+input:focus{border-color:#8dbd72}
+button{
+  width:100%;padding:13px;margin-top:18px;border:0;
+  border-radius:10px;background:#8bad68;color:#10150e;
+  font-weight:bold;font-size:15px;cursor:pointer
+}
+.secondary{background:#263b22;color:#c8e5b8;margin-top:10px}
+#message{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="logo">R.</div>
+  <h1>خوش برگشتی</h1>
+  <p>برای ورود یا ساخت حساب، ایمیل خودت را وارد کن.</p>  <form id="form">
+    <label for="email">ایمیل</label>
+    <input id="email" type="email" autocomplete="email"
+           placeholder="you@example.com" required><label for="password">رمز عبور</label>
+<input id="password" type="password"
+       autocomplete="current-password"
+       minlength="6" placeholder="حداقل ۶ کاراکتر" required>
+
+<button type="submit">ورود</button>
+<button class="secondary" type="button" id="signup">
+  ساخت حساب
+</button>
+
+  </form>
+  <p id="message" role="status">برای استفاده، حساب خودت را بساز.</p>
+</main>
+<script type="module">
+import { createClient } from
+'https://esm.sh/@supabase/supabase-js@2';const SUPABASE_URL = 'PASTE_YOUR_PROJECT_URL';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY';
+
+const form = document.getElementById('form');
+const message = document.getElementById('message');
+const signup = document.getElementById('signup');
+
+const configured =
+!SUPABASE_URL.startsWith('PASTE_') &&
+!SUPABASE_KEY.startsWith('PASTE_');
+
+let supabase;
+
+if (configured) {
+supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+
+async function authenticate(isSignup) {
+if (!configured) {
+message.textContent = 'ابتدا اطلاعات اتصال Supabase را تنظیم کن.';
+return;
+}
+
+const email = document.getElementById('email').value.trim();
+const password = document.getElementById('password').value;
+
+message.textContent = 'لطفاً صبر کن...';
+
+const result = isSignup
+? await supabase.auth.signUp({ email, password })
+: await supabase.auth.signInWithPassword({ email, password });
+
+message.textContent = result.error
+? result.error.message
+: isSignup
+? 'درخواست ثبت‌نام انجام شد. اگر تأیید ایمیل فعال است، ایمیلت را بررسی کن.'
+: 'ورود موفق بود!';
+
+if (result.data?.session) {
+message.textContent = 'ورود موفق بود!';
+}
+}
+
+form.addEventListener('submit', async event => {
+event.preventDefault();
+await authenticate(false);
+});
+
+signup.addEventListener('click', () => authenticate(true));
+</script>
+
+</body>
+  </html>
