@@ -1,115 +1,300 @@
-<!DOCTYPE html><html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dark Login</title>
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;min-height:100vh;display:grid;place-items:center;
-  padding:20px;background:#090b09;color:#f5f7f4;
-  font-family:Tahoma,Arial,sans-serif
-}
-.card{
-  width:100%;max-width:380px;padding:30px;
-  background:#141814;border:1px solid #293329;
-  border-radius:20px;box-shadow:0 15px 50px #0008
-}
-.logo{
-  width:52px;height:52px;display:grid;place-items:center;
-  border-radius:15px;background:#263b22;color:#b5d6a5;
-  font-size:25px;font-weight:bold;margin-bottom:22px
-}
-h1{font-size:25px;margin:0 0 10px}
-p{color:#929a90;font-size:13px;line-height:1.8}
-label{display:block;margin:18px 0 8px;font-size:13px}
-input{
-  width:100%;padding:13px;border:1px solid #343d33;
-  border-radius:10px;background:#0d100d;color:white;
-  font-size:15px;outline:none
-}
-input:focus{border-color:#8dbd72}
-button{
-  width:100%;padding:13px;margin-top:18px;border:0;
-  border-radius:10px;background:#8bad68;color:#10150e;
-  font-weight:bold;font-size:15px;cursor:pointer
-}
-.secondary{background:#263b22;color:#c8e5b8;margin-top:10px}
-#message{overflow-wrap:anywhere}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود | Dark Green</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #080a08;
+      color: #eeeeee;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 380px;
+      padding: 32px 26px;
+      background: #111511;
+      border: 1px solid #35452b;
+      border-radius: 18px;
+      box-shadow: 0 0 30px #293b2025;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: #81965b;
+      text-align: center;
+      font-size: 27px;
+    }
+
+    .subtitle {
+      margin: 0 0 28px;
+      color: #a3a99e;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 8px;
+      color: #d6ddce;
+      font-size: 13px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #343d30;
+      border-radius: 9px;
+      background: #090c09;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: #81965b;
+      box-shadow: 0 0 0 2px #81965b20;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px;
+      border: none;
+      border-radius: 9px;
+      background: #647a43;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #788f53;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .switch {
+      margin-top: 20px;
+      color: #a3a99e;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .switch button {
+      width: auto;
+      margin: 0;
+      padding: 4px 8px;
+      background: transparent;
+      color: #a2bb76;
+      font-size: 13px;
+    }
+
+    #message {
+      display: none;
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #20271c;
+      color: #d7e8bd;
+      font-size: 13px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      margin-top: 20px;
+      color: #777f70;
+      font-size: 11px;
+      text-align: center;
+      line-height: 1.8;
+    }
+  </style>
 </head>
+
 <body>
-<main class="card">
-  <div class="logo">R.</div>
-  <h1>خوش برگشتی</h1>
-  <p>برای ورود یا ساخت حساب، ایمیل خودت را وارد کن.</p>  <form id="form">
-    <label for="email">ایمیل</label>
-    <input id="email" type="email" autocomplete="email"
-           placeholder="you@example.com" required><label for="password">رمز عبور</label>
-<input id="password" type="password"
-       autocomplete="current-password"
-       minlength="6" placeholder="حداقل ۶ کاراکتر" required>
+  <main class="card">
+    <h1 id="title">ورود</h1>
+    <p class="subtitle" id="subtitle">
+      به حساب خود وارد شوید
+    </p>
 
-<button type="submit">ورود</button>
-<button class="secondary" type="button" id="signup">
-  ساخت حساب
-</button>
+    <form id="authForm">
+      <label for="email">ایمیل</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="name@example.com"
+        required
+      >
 
-  </form>
-  <p id="message" role="status">برای استفاده، حساب خودت را بساز.</p>
-</main>
-<script type="module">
-import { createClient } from
-'https://esm.sh/@supabase/supabase-js@2';const SUPABASE_URL = 'PASTE_YOUR_PROJECT_URL';
-const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY';
+      <label for="password">رمز عبور</label>
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        minlength="6"
+        placeholder="حداقل ۶ کاراکتر"
+        required
+      >
 
-const form = document.getElementById('form');
-const message = document.getElementById('message');
-const signup = document.getElementById('signup');
+      <button id="submitButton" type="submit">ورود</button>
+    </form>
 
-const configured =
-!SUPABASE_URL.startsWith('PASTE_') &&
-!SUPABASE_KEY.startsWith('PASTE_');
+    <div class="switch">
+      <span id="switchText">حساب کاربری نداری؟</span>
+      <button id="switchButton" type="button">ثبت‌نام</button>
+    </div>
 
-let supabase;
+    <div id="message" role="status" aria-live="polite"></div>
 
-if (configured) {
-supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-}
+    <p class="note">
+      ورود امن با Supabase Auth
+    </p>
+  </main>
 
-async function authenticate(isSignup) {
-if (!configured) {
-message.textContent = 'ابتدا اطلاعات اتصال Supabase را تنظیم کن.';
-return;
-}
+  <script type="module">
+    import { createClient } from
+      'https://esm.sh/@supabase/supabase-js@2';
 
-const email = document.getElementById('email').value.trim();
-const password = document.getElementById('password').value;
+    // آدرس پروژه خودت را اینجا قرار بده
+    const SUPABASE_URL =
+      'https://hdsktnfshmfvvmwtjsli.supabase.co';
 
-message.textContent = 'لطفاً صبر کن...';
+    // Publishable key خودت را اینجا قرار بده
+    const SUPABASE_KEY =
+      'PASTE_YOUR_PUBLISHABLE_KEY';
 
-const result = isSignup
-? await supabase.auth.signUp({ email, password })
-: await supabase.auth.signInWithPassword({ email, password });
+    const form = document.getElementById('authForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitButton = document.getElementById('submitButton');
+    const switchButton = document.getElementById('switchButton');
+    const switchText = document.getElementById('switchText');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+    const message = document.getElementById('message');
 
-message.textContent = result.error
-? result.error.message
-: isSignup
-? 'درخواست ثبت‌نام انجام شد. اگر تأیید ایمیل فعال است، ایمیلت را بررسی کن.'
-: 'ورود موفق بود!';
+    let isSignUp = false;
 
-if (result.data?.session) {
-message.textContent = 'ورود موفق بود!';
-}
-}
+    function showMessage(text) {
+      message.textContent = text;
+      message.style.display = 'block';
+    }
 
-form.addEventListener('submit', async event => {
-event.preventDefault();
-await authenticate(false);
-});
+    function setMode(signUp) {
+      isSignUp = signUp;
 
-signup.addEventListener('click', () => authenticate(true));
-</script>
+      title.textContent = signUp ? 'ثبت‌نام' : 'ورود';
+      subtitle.textContent = signUp
+        ? 'یک حساب کاربری بسازید'
+        : 'به حساب خود وارد شوید';
 
+      submitButton.textContent = signUp ? 'ساخت حساب' : 'ورود';
+      switchText.textContent = signUp
+        ? 'قبلاً حساب ساخته‌ای؟'
+        : 'حساب کاربری نداری؟';
+
+      switchButton.textContent = signUp ? 'ورود' : 'ثبت‌نام';
+
+      passwordInput.autocomplete = signUp
+        ? 'new-password'
+        : 'current-password';
+
+      message.style.display = 'none';
+    }
+
+    switchButton.addEventListener('click', () => {
+      setMode(!isSignUp);
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (
+        SUPABASE_URL.includes('PASTE_') ||
+        SUPABASE_KEY.includes('PASTE_')
+      ) {
+        showMessage('ابتدا آدرس پروژه و Publishable key را در کد وارد کن.');
+        return;
+      }
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'لطفاً صبر کن...';
+      message.style.display = 'none';
+
+      try {
+        const { createClient } = await import(
+          'https://esm.sh/@supabase/supabase-js@2'
+        );
+
+        const supabase = createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY
+        );
+
+        if (isSignUp) {
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password
+          });
+
+          if (error) throw error;
+
+          if (data.session) {
+            showMessage('حساب ساخته شد و وارد شدی.');
+          } else {
+            showMessage(
+              'درخواست ثبت‌نام انجام شد. اگر تأیید ایمیل فعال است، ایمیلت را بررسی کن.'
+            );
+          }
+        } else {
+          const { error } =
+            await supabase.auth.signInWithPassword({
+              email,
+              password
+            });
+
+          if (error) throw error;
+
+          showMessage('با موفقیت وارد شدی!');
+          title.textContent = 'خوش آمدی!';
+          subtitle.textContent = 'ورود به حساب با موفقیت انجام شد.';
+          form.style.display = 'none';
+          switchButton.style.display = 'none';
+          switchText.style.display = 'none';
+        }
+      } catch (error) {
+        showMessage(
+          'خطا: ' + (error.message || 'اتصال انجام نشد.')
+        );
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = isSignUp ? 'ساخت حساب' : 'ورود';
+      }
+    });
+  </script>
 </body>
-  </html>
+</html>
