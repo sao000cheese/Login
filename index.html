@@ -2,8 +2,8 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dark Green</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Vault</title>
 
   <style>
     * {
@@ -17,116 +17,153 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: #080a08;
-      color: #eee;
+      background: #080b09;
+      color: #f1f5f1;
       font-family: Tahoma, Arial, sans-serif;
     }
 
     .card {
       width: 100%;
-      max-width: 380px;
-      padding: 32px 26px;
-      background: #111511;
-      border: 1px solid #435536;
+      max-width: 390px;
+      padding: 30px 24px;
+      background: #111713;
+      border: 1px solid #29382d;
       border-radius: 18px;
-      box-shadow: 0 0 35px #526b3020;
+      box-shadow: 0 15px 45px #0008;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      border-radius: 16px;
+      background: #263b2b;
+      color: #a5d6a7;
+      font-size: 27px;
     }
 
     h1 {
-      color: #91a96b;
+      margin: 0 0 10px;
       text-align: center;
+      font-size: 25px;
     }
 
-    p {
-      color: #a6ada0;
+    .description {
+      margin: 0 0 28px;
       text-align: center;
+      color: #929d94;
       font-size: 13px;
-      line-height: 1.8;
+      line-height: 1.9;
     }
 
     label {
       display: block;
-      margin: 24px 0 8px;
-      color: #d9e0d2;
-      font-size: 13px;
+      margin-bottom: 10px;
+      color: #c6d1c8;
+      font-size: 14px;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      border: 1px solid #435536;
-      border-radius: 9px;
-      background: #090c09;
-      color: white;
+      padding: 15px;
+      border: 1px solid #35473a;
+      border-radius: 10px;
       outline: none;
-      font-size: 16px;
+      background: #0b100c;
+      color: white;
+      font-size: 15px;
+      direction: ltr;
+      text-align: left;
     }
 
     input:focus {
-      border-color: #91a96b;
+      border-color: #78a77e;
+      box-shadow: 0 0 0 3px #78a77e20;
     }
 
     button {
       width: 100%;
-      margin-top: 20px;
-      padding: 13px;
-      border: none;
-      border-radius: 9px;
-      background: #667d45;
-      color: white;
+      margin-top: 16px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #789b71;
+      color: #071008;
       font-size: 15px;
+      font-weight: bold;
       cursor: pointer;
     }
 
+    button:hover {
+      background: #91b58a;
+    }
+
     button:disabled {
-      opacity: .6;
+      opacity: 0.6;
       cursor: wait;
     }
 
     #message {
+      min-height: 25px;
       margin-top: 18px;
+      text-align: center;
       font-size: 13px;
+      line-height: 1.8;
       overflow-wrap: anywhere;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #647067;
+      font-size: 11px;
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <h1>Dark Green</h1>
+    <div class="logo">⌘</div>
 
-    <p>کد خود را وارد کنید.</p>
+    <h1>Code Vault</h1>
+
+    <p class="description">
+      محیط ذخیره کدها
+    </p>
 
     <form id="codeForm">
-      <label for="code">کد را وارد کنید</label>
+      <label for="code">کد خودت را وارد کن</label>
 
       <input
         id="code"
         type="text"
-        inputmode="numeric"
-        maxlength="6"
-        placehold="کد"
+        maxlength="100"
+        placeholder="کد..."
         autocomplete="off"
         required
       >
 
       <button id="submitButton" type="submit">
-        ثبت کد
+        ذخیره کد
       </button>
     </form>
 
-    <p id="message" role="status" aria-live="polite"></p>
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <div class="footer">
+      Code Vault · Demo
+    </div>
   </main>
 
   <script type="module">
     import { createClient } from
       'https://esm.sh/@supabase/supabase-js@2';
 
-    const SUPABASE_URL =
-      'https://hdsktnfshmfvvmwtjsli.supabase.co';
-
-    const SUPABASE_KEY =
-      'sb_publishable_2XeJnIvnCBtzKtWKDuLEpA_LOx14DEL';
+    // اطلاعات اتصال پروژه Supabase خودت
+    const SUPABASE_URL = 'https://hdsktnfshmfvvmwtjsli.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_2XeJnIvnCBtzKtWKDuLEpA_LOx14DEL';';
 
     const supabase = createClient(
       SUPABASE_URL,
@@ -143,8 +180,8 @@
 
       const code = input.value.trim();
 
-      if (code !== '123456') {
-        message.textContent = 'کد معتبر نیست.';
+      if (!code) {
+        message.textContent = 'لطفاً یک کد وارد کن.';
         return;
       }
 
@@ -155,24 +192,21 @@
       try {
         const { error } = await supabase
           .from('demo_code_entries')
-          .insert({ demo_code: '123456' });
+          .insert({ demo_code: code });
 
         if (error) {
           throw error;
         }
 
-        message.textContent =
-          'کد با موفقیت ثبت شد!';
-
+        message.textContent = 'کد آزمایشی ذخیره شد!';
         input.value = '';
       } catch (error) {
-        console.error(error);
-
+        console.error('Supabase error:', error);
         message.textContent =
-          'ذخیره انجام نشد. تنظیمات Supabase را بررسی کن.';
+          'خطا در ذخیره‌سازی: ' + error.message;
       } finally {
         button.disabled = false;
-        button.textContent = 'ثبت کد';
+        button.textContent = 'ذخیره کد';
       }
     });
   </script>
