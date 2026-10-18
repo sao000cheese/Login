@@ -2,8 +2,8 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Green | ورود</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dark Green</title>
 
   <style>
     * {
@@ -14,8 +14,8 @@
       margin: 0;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 20px;
       background: #080a08;
       color: #eee;
@@ -24,7 +24,7 @@
 
     .card {
       width: 100%;
-      max-width: 390px;
+      max-width: 380px;
       padding: 32px 26px;
       background: #111511;
       border: 1px solid #435536;
@@ -33,14 +33,11 @@
     }
 
     h1 {
-      margin: 0 0 10px;
       color: #91a96b;
       text-align: center;
-      font-size: 28px;
     }
 
-    .subtitle {
-      margin-bottom: 28px;
+    p {
       color: #a6ada0;
       text-align: center;
       font-size: 13px;
@@ -49,20 +46,20 @@
 
     label {
       display: block;
-      margin: 16px 0 8px;
+      margin: 24px 0 8px;
       color: #d9e0d2;
       font-size: 13px;
     }
 
     input {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #343e30;
+      padding: 14px;
+      border: 1px solid #435536;
       border-radius: 9px;
       background: #090c09;
       color: white;
-      font-size: 14px;
       outline: none;
+      font-size: 16px;
     }
 
     input:focus {
@@ -78,12 +75,7 @@
       background: #667d45;
       color: white;
       font-size: 15px;
-      font-weight: bold;
       cursor: pointer;
-    }
-
-    button:hover {
-      background: #7d9657;
     }
 
     button:disabled {
@@ -91,83 +83,39 @@
       cursor: wait;
     }
 
-    .switch {
-      margin-top: 20px;
-      color: #a6ada0;
-      text-align: center;
-      font-size: 13px;
-    }
-
-    .switch button {
-      width: auto;
-      margin: 0;
-      padding: 5px 8px;
-      background: transparent;
-      color: #a9c583;
-    }
-
     #message {
-      display: none;
       margin-top: 18px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #20271c;
-      color: #d7e8bd;
       font-size: 13px;
-      line-height: 1.8;
       overflow-wrap: anywhere;
-    }
-
-    .note {
-      margin-top: 22px;
-      color: #777f70;
-      text-align: center;
-      font-size: 11px;
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <h1 id="title">ورود</h1>
+    <h1>Dark Green</h1>
 
-    <p class="subtitle" id="subtitle">
-      به حساب کاربری خود وارد شوید
-    </p>
+    <p>کد خود را وارد کنید.</p>
 
-    <form id="authForm">
-      <label for="email">ایمیل</label>
+    <form id="codeForm">
+      <label for="code">کد را وارد کنید</label>
+
       <input
-        id="email"
-        type="email"
-        autocomplete="email"
-        placeholder="name@example.com"
-        required
-      >
-
-      <label for="password">رمز عبور</label>
-      <input
-        id="password"
-        type="password"
-        autocomplete="current-password"
-        minlength="6"
-        placeholder="حداقل ۶ کاراکتر"
+        id="code"
+        type="text"
+        inputmode="numeric"
+        maxlength="6"
+        placehold="کد"
+        autocomplete="off"
         required
       >
 
       <button id="submitButton" type="submit">
-        ورود
+        ثبت کد
       </button>
     </form>
 
-    <div class="switch">
-      <span id="switchText">حساب کاربری نداری؟</span>
-      <button id="switchButton" type="button">ثبت‌نام</button>
-    </div>
-
-    <div id="message" role="status" aria-live="polite"></div>
-
-    <p class="note">Secure authentication · Dark Green</p>
+    <p id="message" role="status" aria-live="polite"></p>
   </main>
 
   <script type="module">
@@ -185,105 +133,48 @@
       SUPABASE_KEY
     );
 
-    const form = document.getElementById('authForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const submitButton = document.getElementById('submitButton');
-    const switchButton = document.getElementById('switchButton');
-    const switchText = document.getElementById('switchText');
-    const title = document.getElementById('title');
-    const subtitle = document.getElementById('subtitle');
+    const form = document.getElementById('codeForm');
+    const input = document.getElementById('code');
+    const button = document.getElementById('submitButton');
     const message = document.getElementById('message');
-
-    let isSignUp = false;
-
-    function showMessage(text) {
-      message.textContent = text;
-      message.style.display = 'block';
-    }
-
-    switchButton.addEventListener('click', () => {
-      isSignUp = !isSignUp;
-
-      title.textContent = isSignUp ? 'ثبت‌نام' : 'ورود';
-
-      subtitle.textContent = isSignUp
-        ? 'حساب کاربری جدید بسازید'
-        : 'به حساب کاربری خود وارد شوید';
-
-      submitButton.textContent = isSignUp
-        ? 'ساخت حساب'
-        : 'ورود';
-
-      switchText.textContent = isSignUp
-        ? 'قبلاً حساب ساخته‌ای؟'
-        : 'حساب کاربری نداری؟';
-
-      switchButton.textContent = isSignUp
-        ? 'ورود'
-        : 'ثبت‌نام';
-
-      passwordInput.autocomplete = isSignUp
-        ? 'new-password'
-        : 'current-password';
-
-      message.style.display = 'none';
-    });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const code = input.value.trim();
 
-      submitButton.disabled = true;
-      submitButton.textContent = 'لطفاً صبر کن...';
-      message.style.display = 'none';
+      if (code !== '123456') {
+        message.textContent = 'کد معتبر نیست.';
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'در حال ذخیره...';
+      message.textContent = '';
 
       try {
-        if (isSignUp) {
-          const { data, error } = await supabase.auth.signUp({
-            email,
-            password
-          });
+        const { error } = await supabase
+          .from('demo_code_entries')
+          .insert({ demo_code: '123456' });
 
-          if (error) throw error;
-
-          if (data.session) {
-            showMessage('حساب ساخته شد و وارد شدی!');
-          } else {
-            showMessage(
-              'درخواست ثبت‌نام ارسال شد. اگر تأیید ایمیل فعال است، ایمیلت را بررسی کن.'
-            );
-          }
-        } else {
-          const { error } =
-            await supabase.auth.signInWithPassword({
-              email,
-              password
-            });
-
-          if (error) throw error;
-
-          showMessage('ورود با موفقیت انجام شد!');
-
-          title.textContent = 'خوش آمدی!';
-          subtitle.textContent = 'با موفقیت وارد حساب شدی.';
-
-          form.style.display = 'none';
-          switchButton.style.display = 'none';
-          switchText.style.display = 'none';
+        if (error) {
+          throw error;
         }
+
+        message.textContent =
+          'کد با موفقیت ثبت شد!';
+
+        input.value = '';
       } catch (error) {
-        showMessage('خطا: ' + error.message);
+        console.error(error);
+
+        message.textContent =
+          'ذخیره انجام نشد. تنظیمات Supabase را بررسی کن.';
       } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = isSignUp
-          ? 'ساخت حساب'
-          : 'ورود';
+        button.disabled = false;
+        button.textContent = 'ثبت کد';
       }
     });
   </script>
 </body>
-      </html>
-      
+</html>
